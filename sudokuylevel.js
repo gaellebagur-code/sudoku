@@ -9,4 +9,11 @@ const sudokuGrid = [
   [0, 0, 0, 4, 1, 9, 0, 0, 5],
   [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ];
-const container = document.getElementById("sudoku-grid");
+
+const verifier = () {
+const listinput = document.querySelectorAll('input')  
+console.log(listinput)
+}
+
+const button = document.getElement('check-solution');
+button.addEventListener('click', verifierSolution)
