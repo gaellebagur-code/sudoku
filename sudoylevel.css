@@ -1,0 +1,40 @@
+*{
+margin:0;
+padding:0;
+outline: 0;
+border: 0;
+box-sizing: border-box; 
+}
+
+table{
+    margin: 0 auto;
+    border-collapse; collapsse;
+}
+
+tr{
+  border-bottom: 1px solid #ccc;  
+}
+
+tr:nth-child(3),
+tr:nth-child(6) {
+    border-bottom: 1px solid #000;
+}
+
+td {
+    border-right: 2px solid #ccc;
+}
+
+td:nth-child(3),
+td:nth-child(6) {
+    border-right: 1px solid #000;
+}
+
+input{
+  height: 40px;
+  width: 40px;
+  background-color: #efefef;
+  -moz-appearance: textfield; 
+  border: 1px solid #ccc;
+  font-size: 20px;
+  text-align: center;
+}
