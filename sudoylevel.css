@@ -1,9 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; 
-}
-
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -41,9 +35,10 @@ h1 {
 
 #sudoku-grid {
   margin: 0 auto;
-  border-collapse: collapse;
+  border-collapse: collapse; 
   background: white;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-width: 90vw; 
 }
 
 #sudoku-grid td {
@@ -51,6 +46,7 @@ h1 {
   border: 1px solid #ccc;
   width: 45px;
   height: 45px;
+  transition: background-color 0.2s ease; 
 }
 
 #sudoku-grid tr:nth-child(3) td,
@@ -88,16 +84,28 @@ h1 {
   text-align: center;
   font-weight: bold;
   outline: none;
+  font-family: 'Courier New', monospace; 
+  transition: background-color 0.2s ease;
 }
 
 #sudoku-grid input:focus {
   background-color: #e3f2fd;
 }
 
+#sudoku-grid input:hover {
+  background-color: #f1f8e9;
+}
+
 #sudoku-grid input[readonly] {
   background-color: #f0f0f0;
   color: #000;
   font-weight: bold;
+  border: 1px solid #bbb;
+}
+
+#sudoku-grid input.error {
+  background-color: #ffebee;
+  color: #d32f2f;
 }
 
 #sudoku-grid input::-webkit-outer-spin-button,
