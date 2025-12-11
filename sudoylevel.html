@@ -7,10 +7,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Sudoku Grid</h1>
+  <h1> 🤔​ Sudoku Grid 🧩</h1>
+
+<div class="controls">
+  <button id="new-game">new game</button>
+  <button id="check-solution">Click me to check solution</button>
+  <button id="solve">solve</button>
+</div>
 
 <table id="sudoku-grid">
-    <tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case0-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case0-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case0-2"></td>
@@ -20,8 +26,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case0-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case0-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case0-8"></td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case1-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case1-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case1-2"></td>
@@ -31,8 +37,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case1-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case1-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case1-8"></td>       
-    </tr>
-    <tr>
+  </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case2-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case2-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case2-2"></td>
@@ -42,8 +48,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case2-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case2-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case2-8"></td>     
-    </tr>
-    <tr>
+  </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case3-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case3-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case3-2"></td>
@@ -53,8 +59,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case3-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case3-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case3-8"></td>     
-    </tr>
-    <tr>
+   </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case4-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case4-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case4-2"></td>
@@ -64,8 +70,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case4-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case4-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case4-8"></td>     
-    </tr>
-    <tr>
+  </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case5-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case5-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case5-2"></td>
@@ -75,8 +81,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case5-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case5-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case5-8"></td>    
-    </tr>
-    <tr>
+  </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case6-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case6-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case6-2"></td>
@@ -86,8 +92,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case6-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case6-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case6-8"></td>   
-    </tr>
-    <tr>
+  </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case7-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case7-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case7-2"></td>
@@ -97,8 +103,8 @@
       <td><input type="number" min="1" max="9" step="1" id="case7-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case7-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case7-8"></td>
-    </tr>
-    <tr>
+   </tr>
+  <tr>
       <td><input type="number" min="1" max="9" step="1" id="case8-0"></td>
       <td><input type="number" min="1" max="9" step="1" id="case8-1"></td>
       <td><input type="number" min="1" max="9" step="1" id="case8-2"></td>
@@ -108,10 +114,9 @@
       <td><input type="number" min="1" max="9" step="1" id="case8-6"></td>
       <td><input type="number" min="1" max="9" step="1" id="case8-7"></td>
       <td><input type="number" min="1" max="9" step="1" id="case8-8"></td>            
-   
+  </tr>    
   </table>
 
-  <button id="check-solution">Click me to check solution</button>
   <script src="sudokuylevel.js"></script>
 </body>
 </html>

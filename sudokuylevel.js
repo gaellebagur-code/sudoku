@@ -12,7 +12,17 @@ const sudokuGrid = [
 
 const verifier = () {
 const listinput = document.querySelectorAll('input')  
-console.log(listinput)
+
+for (const input of listinput){
+  constvalideinput = input.checkValidity
+
+  if (validiteinput == false) {
+    return
+  }
+}
+
+for ()
+
 }
 
 const button = document.getElement('check-solution');
