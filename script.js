@@ -32,49 +32,33 @@ function generateSudoku(level) {
 }
 
 function afficherGrille(grille) {
-  const table = document.getElementById("sudoku-grid");
-  table.innerHTML = "";
-
   for (let i = 0; i < 9; i++) {
-    const tr = document.createElement("tr");
-
     for (let j = 0; j < 9; j++) {
-      const td = document.createElement("td");
-      const input = document.createElement("input");
-
-      input.type = "text";
-      input.maxLength = 1;
-
+      const input = document.getElementById(`case${i}-${j}`);
+      input.classList.remove('fixe', 'error');
+      
       if (grille[i][j] !== 0) {
         input.value = grille[i][j];
         input.readOnly = true;
         input.classList.add("fixe");
+      } else {
+        input.value = "";
+        input.readOnly = false;
       }
-
-      input.addEventListener("input", () => {
-        if (!/^[1-9]$/.test(input.value)) input.value = "";
-      });
-
-      td.appendChild(input);
-      tr.appendChild(td);
     }
-
-    table.appendChild(tr);
   }
 }
 
 function readGridFromInputs() {
-  const inputs = [...document.querySelectorAll("#sudoku-grid input")];
   const grid = [];
-
   for (let i = 0; i < 9; i++) {
     grid[i] = [];
     for (let j = 0; j < 9; j++) {
-      const val = inputs[i * 9 + j].value;
+      const input = document.getElementById(`case${i}-${j}`);
+      const val = input.value;
       grid[i][j] = val ? parseInt(val) : 0;
     }
   }
-
   return grid;
 }
 
@@ -119,7 +103,6 @@ function solveSudoku(grid) {
 
 function verifierLigne(grille, indexLigne) {
   const chiffres = new Set();
-
   for (let j = 0; j < 9; j++) {
     const val = grille[indexLigne][j];
     if (val < 1 || val > 9 || chiffres.has(val)) return false;
@@ -130,7 +113,6 @@ function verifierLigne(grille, indexLigne) {
 
 function verifierColonne(grille, indexColonne) {
   const chiffres = new Set();
-
   for (let i = 0; i < 9; i++) {
     const val = grille[i][indexColonne];
     if (val < 1 || val > 9 || chiffres.has(val)) return false;
@@ -141,7 +123,6 @@ function verifierColonne(grille, indexColonne) {
 
 function verifierRegion(grille, startLigne, startColonne) {
   const chiffres = new Set();
-
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       const val = grille[startLigne + i][startColonne + j];
@@ -153,21 +134,17 @@ function verifierRegion(grille, startLigne, startColonne) {
 }
 
 function verifierGrilleComplete(grille) {
-
   for (let i = 0; i < 9; i++) {
     if (!verifierLigne(grille, i)) return false;
   }
-
   for (let j = 0; j < 9; j++) {
     if (!verifierColonne(grille, j)) return false;
   }
-
   for (let r = 0; r < 9; r += 3) {
     for (let c = 0; c < 9; c += 3) {
       if (!verifierRegion(grille, r, c)) return false;
     }
   }
-
   return true;
 }
 
@@ -200,12 +177,14 @@ document.getElementById("level-hard").addEventListener("click", () => {
 });
 
 document.getElementById("new-game").addEventListener("click", () => {
-  afficherGrille(currentGrid || generateSudoku("medium"));
+  afficherGrille(initialGrid || generateSudoku("medium"));
   document.getElementById("message").textContent = "New game 🎲";
 });
 
 document.getElementById("solve").addEventListener("click", () => {
-  afficherGrille(solveSudoku(readGridFromInputs()));
+  const gridToSolve = readGridFromInputs();
+  solveSudoku(gridToSolve);
+  afficherGrille(gridToSolve);
   document.getElementById("message").textContent = "Solved 😎";
 });
 
@@ -213,5 +192,10 @@ document.getElementById("check-solution").addEventListener("click", () => {
   verifierMaSolution();
 });
 
-afficherGrille(generateSudoku("easy"));
+document.querySelectorAll('#sudoku-grid input').forEach(input => {
+  input.addEventListener('input', (e) => {
+    if (!/^[1-9]$/.test(e.target.value)) e.target.value = "";
+  });
+});
 
+afficherGrille(generateSudoku("easy"));
