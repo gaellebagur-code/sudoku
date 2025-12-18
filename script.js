@@ -35,14 +35,14 @@ function afficherGrille(grille) {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       const input = document.getElementById(`case${i}-${j}`);
-      input.classList.remove('fixe', 'error');
-      
+      input.classList.remove("fixe", "highlight-error");
+
       if (grille[i][j] !== 0) {
         input.value = grille[i][j];
         input.readOnly = true;
         input.classList.add("fixe");
       } else {
-        input.value = "";
+        input.value = "0";
         input.readOnly = false;
       }
     }
@@ -54,8 +54,7 @@ function readGridFromInputs() {
   for (let i = 0; i < 9; i++) {
     grid[i] = [];
     for (let j = 0; j < 9; j++) {
-      const input = document.getElementById(`case${i}-${j}`);
-      const val = input.value;
+      const val = document.getElementById(`case${i}-${j}`).value;
       grid[i][j] = val ? parseInt(val) : 0;
     }
   }
@@ -68,8 +67,8 @@ function solveSudoku(grid) {
       if (grid[row][x] === num || grid[x][col] === num) return false;
     }
 
-    const sr = row - row % 3;
-    const sc = col - col % 3;
+    const sr = row - (row % 3);
+    const sc = col - (col % 3);
 
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 3; c++) {
@@ -101,100 +100,91 @@ function solveSudoku(grid) {
   return grid;
 }
 
-function verifierLigne(grille, indexLigne) {
-  const chiffres = new Set();
-  for (let j = 0; j < 9; j++) {
-    const val = grille[indexLigne][j];
-    if (val < 1 || val > 9 || chiffres.has(val)) return false;
-    chiffres.add(val);
-  }
-  return true;
-}
-
-function verifierColonne(grille, indexColonne) {
-  const chiffres = new Set();
-  for (let i = 0; i < 9; i++) {
-    const val = grille[i][indexColonne];
-    if (val < 1 || val > 9 || chiffres.has(val)) return false;
-    chiffres.add(val);
-  }
-  return true;
-}
-
-function verifierRegion(grille, startLigne, startColonne) {
-  const chiffres = new Set();
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      const val = grille[startLigne + i][startColonne + j];
-      if (val < 1 || val > 9 || chiffres.has(val)) return false;
-      chiffres.add(val);
-    }
-  }
-  return true;
-}
-
-function verifierGrilleComplete(grille) {
-  for (let i = 0; i < 9; i++) {
-    if (!verifierLigne(grille, i)) return false;
-  }
-  for (let j = 0; j < 9; j++) {
-    if (!verifierColonne(grille, j)) return false;
-  }
-  for (let r = 0; r < 9; r += 3) {
-    for (let c = 0; c < 9; c += 3) {
-      if (!verifierRegion(grille, r, c)) return false;
-    }
-  }
-  return true;
-}
-
 function verifierMaSolution() {
-  const grilleJoueur = readGridFromInputs();
+  const grille = readGridFromInputs();
   const msg = document.getElementById("message");
 
-  if (verifierGrilleComplete(grilleJoueur)) {
-    msg.textContent = "✅ Bravo ! Ta grille est valide 🎉";
+  document.querySelectorAll("#sudoku-grid input").forEach(i =>
+    i.classList.remove("highlight-error")
+  );
+
+  let erreur = false;
+
+  for (let i = 0; i < 9; i++) {
+    const seen = {};
+    for (let j = 0; j < 9; j++) {
+      const val = grille[i][j];
+      if (val >= 1 && val <= 9) {
+        if (seen[val] !== undefined) {
+          erreur = true;
+          document.getElementById(`case${i}-${j}`).classList.add("highlight-error");
+          document.getElementById(`case${i}-${seen[val]}`).classList.add("highlight-error");
+        } else {
+          seen[val] = j;
+        }
+      }
+    }
+  }
+
+  for (let j = 0; j < 9; j++) {
+    const seen = {};
+    for (let i = 0; i < 9; i++) {
+      const val = grille[i][j];
+      if (val >= 1 && val <= 9) {
+        if (seen[val] !== undefined) {
+          erreur = true;
+          document.getElementById(`case${i}-${j}`).classList.add("highlight-error");
+          document.getElementById(`case${seen[val]}-${j}`).classList.add("highlight-error");
+        } else {
+          seen[val] = i;
+        }
+      }
+    }
+  }
+
+  if (!erreur) {
+    msg.textContent = "✅ Aucun doublon détecté 🎉";
     msg.className = "success";
   } else {
-    msg.textContent = "❌ La grille n'est pas correcte 🙈";
+    msg.textContent = "❌ Des doublons ont été trouvés 🙈";
     msg.className = "error";
   }
 }
 
 document.getElementById("level-easy").addEventListener("click", () => {
   afficherGrille(generateSudoku("easy"));
-  document.getElementById("message").textContent = "Easy mode 😊";
+  message.textContent = "Easy mode 😊";
 });
 
 document.getElementById("level-medium").addEventListener("click", () => {
   afficherGrille(generateSudoku("medium"));
-  document.getElementById("message").textContent = "Medium mode 😏";
+  message.textContent = "Medium mode 😏";
 });
 
 document.getElementById("level-hard").addEventListener("click", () => {
   afficherGrille(generateSudoku("hard"));
-  document.getElementById("message").textContent = "Hard mode 😈";
+  message.textContent = "Hard mode 😈";
 });
 
 document.getElementById("new-game").addEventListener("click", () => {
   afficherGrille(initialGrid || generateSudoku("medium"));
-  document.getElementById("message").textContent = "New game 🎲";
+  message.textContent = "New game 🎲";
 });
 
 document.getElementById("solve").addEventListener("click", () => {
-  const gridToSolve = readGridFromInputs();
-  solveSudoku(gridToSolve);
-  afficherGrille(gridToSolve);
-  document.getElementById("message").textContent = "Solved 😎";
+  const grid = readGridFromInputs();
+  solveSudoku(grid);
+  afficherGrille(grid);
+  message.textContent = "Solved 😎";
 });
 
 document.getElementById("check-solution").addEventListener("click", () => {
   verifierMaSolution();
 });
 
-document.querySelectorAll('#sudoku-grid input').forEach(input => {
-  input.addEventListener('input', (e) => {
-    if (!/^[1-9]$/.test(e.target.value)) e.target.value = "";
+document.querySelectorAll("#sudoku-grid input").forEach(input => {
+  input.addEventListener("input", e => {
+    if (!/^[1-9]$/.test(e.target.value)) e.target.value = "0";
   });
 });
 

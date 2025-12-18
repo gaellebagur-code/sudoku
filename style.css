@@ -148,6 +148,11 @@ h1 {
   animation: shakeCase 0.3s 3;
 }
 
+.highlight-error {
+  background: #ff8a80 !important;
+  border-color: #b71c1c !important;
+}
+
 @keyframes shakeCase {
   0% { transform: translateX(0); }
   25% { transform: translateX(-4px); }
@@ -161,6 +166,7 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input[type=number] {
   -moz-appearance: textfield;
 }
